@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "id": "ea3e",
+      "name": "Test Project 1",
+      "budget": "21000",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "cost": 0,
+      "services": []
+    },
+    {
+      "id": "0544",
+      "name": "Test Project 2",
+      "budget": "13000",
+      "category": {
+        "id": "2",
+        "name": "Dev"
+      },
+      "cost": 0,
+      "services": []
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Infra"
+    },
+    {
+      "id": "2",
+      "name": "Dev"
+    },
+    {
+      "id": "3",
+      "name": "Design"
+    },
+    {
+      "id": "4",
+      "name": "Planner"
+    }
+  ]
+}
