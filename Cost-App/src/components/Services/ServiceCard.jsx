@@ -4,11 +4,13 @@ import {BsFillTrashFill} from "react-icons/bs"
 function ServiceCard ({id, name, cost, description, handleRemove}) {
     
     const remove = (e) => {
-        
+        e.preventDefault()
+        handleRemove(id, cost)
+        console.log("chegou aqui")
     }
     
     return (
-        <div className="p-4 border-solid border rounded-md w-1/5 bg-zinc-800">
+        <div className="p-4 border-solid border rounded-md w-1/5 m-2 bg-zinc-800">
             <h4 className="bg-zinc-900 text-yellow-500 p-2 mb-5 text-md font-bold">{name}</h4>
             <p>
                 <span>Cost: </span>R${cost}

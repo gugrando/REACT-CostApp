@@ -98,9 +98,11 @@ function Project(){
             },
             body: JSON.stringify(projectUpdated),
         }).then((resp)=> resp.json()).then((data)=>{
-            
+            setProject(projectUpdated)
+            setServices(servicesUpdated)
+            setMessage('Service removed with success')
         }).catch(err => console.log(err))
-    }
+    }   
 
     return (
         <>
@@ -136,7 +138,7 @@ function Project(){
                             </div>
                         </div>
                         <h2 className="mb-2 p-2 text-xl font-bold">Services</h2>
-                        <Container customlClass='start'>
+                        <Container customClass='start' className='gap-2'>
                             {services.length > 0 && services.map((service)=>(
                                 <ServiceCard id={service.id} name={service.name} cost={service.cost} description={service.description} key={service.id} handleRemove={removeService}/>
                             ))}

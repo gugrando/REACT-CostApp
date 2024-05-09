@@ -19,31 +19,19 @@
         "id": "2",
         "name": "Dev"
       },
-      "cost": 5721,
+      "cost": 5500,
       "services": [
         {
-          "name": "Test Service 1",
-          "cost": "1500",
-          "description": "Test of Service Submit",
-          "id": "1c0d76f1-a930-4bc1-934c-064b41f90340"
-        },
-        {
-          "name": "Dev JS",
-          "cost": "1500",
-          "description": "Test of Service Form False",
-          "id": "4e5db512-9276-4aa1-8aba-8fa2da84d290"
-        },
-        {
-          "name": "Dev JS",
-          "cost": "1500",
-          "description": "Test of Service Form False",
-          "id": "da0ef5c7-476d-4254-bbf6-9c5f0a08983f"
-        },
-        {
           "name": "Test Project",
-          "cost": "1221",
+          "cost": "1500",
+          "description": "Test of Service Form False",
+          "id": "eef6f494-9d46-40d5-96bc-9642f19809a3"
+        },
+        {
+          "name": "Test Project 2",
+          "cost": "4000",
           "description": "222",
-          "id": "581b9c92-f3dd-4be7-8366-473ac0049147"
+          "id": "d81bbe16-d554-4600-a926-e426cd2077dd"
         }
       ]
     }
