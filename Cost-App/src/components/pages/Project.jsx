@@ -5,9 +5,13 @@ import Loading from "../layouts/Load"
 import Container from "../layouts/Container"
 import ProjectForm from "../project/ProjectForm"
 import Message from "../layouts/Message"
+import ServiceForm from "../Services/ServiceForm"
+import { parse, v4 as uuidv4 } from 'uuid'
+import ServiceCard from "../Services/ServiceCard"
 function Project(){
     const { id } = useParams()
     const [project, setProject] = useState([])
+    const [services, setServices] = useState([])
     const [message, setMessage] = useState()
     const [type, setType] = useState()
 
@@ -18,7 +22,8 @@ function Project(){
             headers: {
                 'Content-Type': 'application/json'
             },
-        }).then((resp)=> resp.json()).then((data)=>{setProject(data)}).catch(err => console.log(err))
+        }).then((resp)=> resp.json()).then((data)=>{setProject(data) 
+            setServices(data.services)}).catch(err => console.log(err))
         },2000)
     },[id])
 
@@ -52,6 +57,51 @@ function Project(){
         setMessage('')
     }
 
+    function createService(project){
+        setMessage('')
+        const lastService = project.services[project.services.length - 1]
+        const lastCost = lastService.cost
+        const newCost = parseFloat(project.cost) + parseFloat(lastCost)
+        
+        lastService.id = uuidv4()
+        
+        if (newCost > parseFloat(project.budget)){
+            setMessage('(Budget limit) Verify your service cost!')
+            setType('error')
+            project.services.pop()  
+            return false
+        }
+
+        project.cost = newCost
+
+        fetch(`http://localhost:5000/projects/${project.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(project),
+        }).then((resp)=> resp.json()).then((data)=>{
+            setShowServiceForm(false)
+        }).catch(err => console.log(err))
+
+    }
+    function removeService(id, cost){
+        const servicesUpdated = project.services.filter((service) => service.id !== id)
+        const projectUpdated = project 
+        projectUpdated.services = servicesUpdated
+        projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost)
+
+        fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(projectUpdated),
+        }).then((resp)=> resp.json()).then((data)=>{
+            
+        }).catch(err => console.log(err))
+    }
+
     return (
         <>
             {project.name ? (
@@ -80,14 +130,17 @@ function Project(){
                             </button>
                             <div className="w-full">
                                 {showServiceForm && (
-                                    <div>Service Form</div>
+                                    <ServiceForm handleSubmit={createService} btnText="Add Service" projectData={project} />
                                 ) 
                                 }
                             </div>
                         </div>
                         <h2 className="mb-2 p-2 text-xl font-bold">Services</h2>
                         <Container customlClass='start'>
-                                <p className="p-2">Service Items</p>
+                            {services.length > 0 && services.map((service)=>(
+                                <ServiceCard id={service.id} name={service.name} cost={service.cost} description={service.description} key={service.id} handleRemove={removeService}/>
+                            ))}
+                            {services.length === 0 && <p className="p-2">There are no registered services</p>}
                         </Container>
                     </Container>
                 </div>
